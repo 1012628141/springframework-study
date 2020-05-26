@@ -138,12 +138,10 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		return new StandardServletEnvironment();
 	}
 
-	/**
-	 * Map config parameters onto bean properties of this servlet, and
-	 * invoke subclass initialization.
-	 * @throws ServletException if bean properties are invalid (or required
-	 * properties are missing), or if subclass initialization fails.
-	 */
+	/*将配置参数映射到该servlet的bean属性上，并
+	 *调用子类初始化。
+	 *如果bean属性无效（或必需），则抛出ServletException
+	 *属性丢失），或者子类初始化失败。*/
 	@Override
 	public final void init() throws ServletException {
 
@@ -165,7 +163,7 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 			}
 		}
 
-		// Let subclasses do whatever initialization they like.
+		// 让子类进行他的初始化
 		initServletBean();
 	}
 
@@ -181,11 +179,10 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	}
 
 	/**
-	 * Subclasses may override this to perform custom initialization.
-	 * All bean properties of this servlet will have been set before this
-	 * method is invoked.
-	 * <p>This default implementation is empty.
-	 * @throws ServletException if subclass initialization fails
+	 * 子类可以重写此方法以执行自定义初始化。
+	 * 此servlet的所有bean属性将在此之前设置
+	 * 默认方法为空
+	 * @throws ServletException 如果子类初始化失败
 	 */
 	protected void initServletBean() throws ServletException {
 	}

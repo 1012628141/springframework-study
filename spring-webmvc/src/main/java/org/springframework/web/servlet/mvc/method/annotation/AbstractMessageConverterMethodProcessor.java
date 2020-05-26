@@ -185,7 +185,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 		Object body;
 		Class<?> valueType;
 		Type targetType;
-
+		//如果为string类型的，标志为string类型
 		if (value instanceof CharSequence) {
 			body = value.toString();
 			valueType = String.class;
@@ -196,7 +196,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 			valueType = getReturnValueType(body, returnType);
 			targetType = GenericTypeResolver.resolveType(getGenericType(returnType), returnType.getContainingClass());
 		}
-
+		//如果返回的为资源类型，字节流相关
 		if (isResourceType(value, returnType)) {
 			outputMessage.getHeaders().set(HttpHeaders.ACCEPT_RANGES, "bytes");
 			if (value != null && inputMessage.getHeaders().getFirst(HttpHeaders.RANGE) != null &&
@@ -224,7 +224,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 			}
 			selectedMediaType = contentType;
 		}
-		else {
+		else { //如果返回没有设置contentType
 			HttpServletRequest request = inputMessage.getServletRequest();
 			List<MediaType> acceptableTypes = getAcceptableMediaTypes(request);
 			List<MediaType> producibleTypes = getProducibleMediaTypes(request, valueType, targetType);

@@ -105,11 +105,16 @@ public class RequestResponseBodyMethodProcessor extends AbstractMessageConverter
 	}
 
 
+	/*
+	* HandlerMethodArgumentResolver 请求使用类型的参数
+	* */
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		return parameter.hasParameterAnnotation(RequestBody.class);
 	}
-
+	/*
+	 * HandlerMethodReturnValueHandler 请求使用类型的参数
+	 * */
 	@Override
 	public boolean supportsReturnType(MethodParameter returnType) {
 		return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ResponseBody.class) ||

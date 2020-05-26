@@ -174,7 +174,7 @@ public abstract class AbstractMessageConverterMethodArgumentResolver implements 
 			throw new HttpMediaTypeNotSupportedException(ex.getMessage());
 		}
 		if (contentType == null) {
-			noContentType = true;
+			noContentType = true;//如果客户端没有设置contentType，就设置为APPLICATION_OCTET_STREAM
 			contentType = MediaType.APPLICATION_OCTET_STREAM;
 		}
 
@@ -191,13 +191,13 @@ public abstract class AbstractMessageConverterMethodArgumentResolver implements 
 		EmptyBodyCheckingHttpInputMessage message;
 		try {
 			message = new EmptyBodyCheckingHttpInputMessage(inputMessage);
-
+			//messageConverters 参数的转换器 默认有
 			for (HttpMessageConverter<?> converter : this.messageConverters) {
 				Class<HttpMessageConverter<?>> converterType = (Class<HttpMessageConverter<?>>) converter.getClass();
 				GenericHttpMessageConverter<?> genericConverter =
 						(converter instanceof GenericHttpMessageConverter ? (GenericHttpMessageConverter<?>) converter : null);
 				if (genericConverter != null ? genericConverter.canRead(targetType, contextClass, contentType) :
-						(targetClass != null && converter.canRead(targetClass, contentType))) {
+						(targetClass != null && converter.canRead(targetClass, contentType))) {//此处判断使用什么参数转换器 
 					if (message.hasBody()) {
 						HttpInputMessage msgToUse =
 								getAdvice().beforeBodyRead(message, parameter, targetType, converterType);
